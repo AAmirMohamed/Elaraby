@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <link rel="stylesheet" href="Login.css">
+</head>
+<body>
+
+  <!-- Login Form -->
+  <form id="loginForm" onsubmit="login()">
+    <h1>Login</h1>
+    <label for="loginName">Username:</label>
+    <input type="text" id="loginName">
+    <label for="loginPass">Password:</label>
+    <input type="password" id="loginPass">
+    <button type="submit" onclick="login()">Login</button>
+    <br>
+    <a href="#forForm">Forget Password</a>
+    <br>
+    Don't have an account?
+    <a href="#signupForm">Sign Up</a>
+  </form>
+  <br>
+
+  <!-- Sign Up Form -->
+  <form id="signupForm" onsubmit="validateForm()">
+    <h1>Sign UP</h1>
+    <label for="name">UserName:</label>
+    <input type="text" id="name">
+    <label for="password">Password:</label>
+    <input type="password" id="password">
+    <label for="age">Age:</label>
+    <input type="age" id="age">
+    <label for="gender">Gender:</label>
+    <label for="Male">Male</label>
+    <input type="radio" id="male" name="gender">
+    <label for="female">Female</label>
+    <input type="radio" id="female" name="gender">
+    <label for="phone">Phone Number:</label>
+    <input type="text" id="phone">
+    <button type="submit" onclick="addUser()">Sign Up</button>
+  </form>
+  <br>
+
+  <!-- Forget Password Form -->
+  <form id="forForm">
+    <h1>Forget Password</h1>
+    <label for="forgetName">Username</label>
+    <input type="text" id="forgetName">
+    <label for="forgetNewPass">New Password</label>
+    <input type="password" id="forgetNewPass">
+    <button type="submit" onclick="update()">Update</button>
+  </form>
+
+  <script>
+    const users = [];
+
+    let login_Users = [
+    {
+        username: "user1",
+        pass: "pass123",
+        age: 25,
+        gender: "male",
+        phone: "123-456-7890"
+    },
+    {
+        username: "user2",
+        pass: "abc456", 
+        age: 30,
+        gender: "female",
+        phone: "987-654-3210"
+    }
+    ];
+
+    function login() {
+    const nameInput = document.getElementById('loginName');
+    const passInput = document.getElementById('loginPass');
+    const nameValue = nameInput.value.trim();
+    const passValue = passInput.value.trim();
+    console.log("Entered name:", nameValue);
+    console.log("Entered password:", passValue);
+
+    const userFound = login_Users.find(user => user.username === nameValue && user.pass === passValue);
+    console.log("User found:", userFound);
+
+    if (userFound) {
+        alert('Login successful!');
+        window.location.href = 'Quiz.html';
+    } else {
+        alert('Login failed. Incorrect name or password.');
+    }
+    }
+
+
+
+function addUser(name, password, Conferpassword, gender, phone) {
+        if (name !== '' && password !== '') {
+            if (password === Conferpassword) {
+            let user = {
+                name: name,
+                password: password,
+                gender: gender,
+                phone: phone
+            };
+            users.push(user);
+            alert('Signup successful!');
+            console.log(users);
+            localStorage.setItem('users', JSON.stringify(users));
+            } else {
+            alert('Password and confirm password do not match');
+            }
+        } else {
+            alert('Please enter Data!');
+        }
+}
+
+document.getElementById('signupForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  let name = document.getElementById('name').value;
+  let password = document.getElementById('password').value;
+  let Conferpassword = document.getElementById('cpassword').value;
+  let gender = document.querySelector('input[name="gender"]:checked').value;
+  let phone = document.getElementById('phone').value;
+  addUser(name, password, Conferpassword, gender, phone);
+});
+
+
+    // function addUser(name, password, Conferpassword, gender, phone) {
+    //   if (name !== '' && password !== '') {
+    //     if (password === Conferpassword) {
+    //       let user = {
+    //         name: name,
+    //         password: password,
+    //         gender: gender,
+    //         phone: phone
+    //       };
+    //       users.push(user);
+    //       alert('Signup successful!');
+    //       console.log(users);
+    //       localStorage.setItem('users', JSON.stringify(users));
+    //     } else {
+    //       alert('Password and confirm password do not match');
+    //     }
+    //   } else {
+    //     alert('Please enter Data! .');
+    //   }
+    // 
+
+
+    // document.getElementById('signupForm').addEventListener('submit', function(event) { 
+    //   event.preventDefault();
+
+    //   let name = document.getElementById('name').value;
+    //   let password = document.getElementById('password').value;
+    //   let Conferpassword = document.getElementById('cpassword').value;
+    //   let gender = document.getElementById('gender').value;
+    //   let phone = document.getElementById('phone').value;
+    //   addUser(name, password, Conferpassword, gender, phone);
+    // });
+    
+    // function update() {
+    //   // Define functionality for updating password
+    // }
+
+    // function validateForm() {
+    //   // Define form validation functionality for sign up
+    // }
+
+
+  </script>
+
+</body>
+</html>
